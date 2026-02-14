@@ -449,7 +449,7 @@
 .gift-heart-card-title {
   font-family: var(--font-display);
   color: #fff;
-  font-size: clamp(1.3rem, 5vw, 2rem);
+  font-size: clamp(1.6rem, 7vw, 2.2rem);
   text-align: center;
   text-shadow: 0 2px 12px rgba(230, 57, 70, 0.5);
   white-space: nowrap;
