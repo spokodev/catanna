@@ -1,0 +1,134 @@
+/* ── Backdrop ── */
+.daily-panel-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.daily-panel-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ── Panel ── */
+.daily-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 340px;
+  height: 100vh;
+  height: 100dvh;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-left: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.08);
+  z-index: 11;
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 0;
+}
+
+.daily-panel.open {
+  transform: translateX(0);
+}
+
+/* ── Close button ── */
+.daily-panel-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: rgba(0, 0, 0, 0.06);
+  border-radius: 50%;
+  font-size: 1.2rem;
+  color: #666;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+  z-index: 1;
+}
+
+.daily-panel-close:hover {
+  background: rgba(0, 0, 0, 0.12);
+}
+
+/* ── Content ── */
+.daily-panel-content {
+  padding: 3.5rem 1.5rem 2rem;
+}
+
+/* ── Section ── */
+.daily-section {
+  margin-bottom: 1.5rem;
+}
+
+.daily-section-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--color-text);
+  margin: 0 0 0.75rem;
+}
+
+/* ── Holiday list ── */
+.daily-holidays {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.daily-holiday-item {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--color-text);
+  padding: 0.5rem 0.75rem;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 10px;
+  border: 1px solid rgba(230, 57, 70, 0.08);
+}
+
+.daily-holiday-link {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.daily-holiday-link:hover {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+/* ── Spotify embed ── */
+.daily-song-title {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  margin: 0 0 0.5rem;
+}
+
+.daily-spotify-embed {
+  width: 100%;
+  border-radius: 12px;
+  border: none;
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  .daily-panel {
+    width: 100%;
+  }
+}

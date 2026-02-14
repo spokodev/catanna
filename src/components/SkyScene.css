@@ -1,0 +1,94 @@
+.sky-scene {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  z-index: 10;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* ── Sun ── */
+.sky-sun {
+  position: absolute;
+  top: 16px;
+  right: 10%;
+  animation: sun-glow 4s ease-in-out infinite;
+  pointer-events: auto;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  transition: transform 0.3s ease;
+  z-index: 1;
+}
+
+.sky-sun:hover {
+  transform: scale(1.15);
+}
+
+.sky-sun:active {
+  transform: scale(0.95);
+}
+
+@keyframes sun-glow {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 8px rgba(255, 217, 61, 0.4));
+  }
+  50% {
+    transform: scale(1.06);
+    filter: drop-shadow(0 0 16px rgba(255, 217, 61, 0.6));
+  }
+}
+
+/* ── Clouds ── */
+.sky-cloud {
+  position: absolute;
+  opacity: 0.7;
+}
+
+.cloud-1 {
+  top: 12px;
+  animation: drift-cloud 50s linear infinite;
+  animation-delay: -5s;
+}
+
+.cloud-2 {
+  top: 38px;
+  animation: drift-cloud 38s linear infinite;
+  animation-delay: -18s;
+}
+
+.cloud-3 {
+  top: 22px;
+  animation: drift-cloud 60s linear infinite;
+  animation-delay: -30s;
+}
+
+@keyframes drift-cloud {
+  0% {
+    transform: translateX(-140px);
+  }
+  100% {
+    transform: translateX(calc(100vw + 40px));
+  }
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  .sky-scene {
+    height: 90px;
+  }
+
+  .sky-sun {
+    top: 10px;
+    right: 6%;
+  }
+
+  .sky-sun svg {
+    width: 56px;
+    height: 56px;
+  }
+}

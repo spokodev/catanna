@@ -1,0 +1,45 @@
+.header {
+  text-align: center;
+  padding: 2.5rem 1rem 1rem;
+  animation: fadeInDown 0.8s ease-out;
+  flex-shrink: 0;
+}
+
+.header-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 10vw, 3.5rem);
+  font-weight: 400;
+  letter-spacing: 2px;
+  background: linear-gradient(135deg, #e63946 0%, #ff6b81 50%, #b19cd9 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: none;
+  filter: drop-shadow(0 2px 8px rgba(230, 57, 70, 0.15));
+  margin: 0;
+  line-height: 1.2;
+}
+
+.header-subtitle {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  margin: 0.25rem 0 0;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+}
+
+.header-line {
+  margin-top: 0.75rem;
+  display: flex;
+  justify-content: center;
+}
+
+@media (min-width: 768px) {
+  .header-title {
+    font-size: 5rem;
+  }
+  .header-subtitle {
+    font-size: 1.2rem;
+  }
+}

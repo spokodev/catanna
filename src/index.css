@@ -1,0 +1,140 @@
+/* === Design System Tokens === */
+:root {
+  --color-primary: #e63946;
+  --color-secondary: #ffb7c5;
+  --color-accent: #b19cd9;
+  --color-bg: #fff8f3;
+  --color-bg-end: #fff0e8;
+  --color-text: #2d3142;
+  --color-text-muted: #6b7280;
+  --color-white: #ffffff;
+  --color-card-bg: rgba(255, 255, 255, 0.65);
+  --color-card-border: rgba(255, 183, 197, 0.3);
+
+  --shadow-card:
+    0 2px 4px rgba(230, 57, 70, 0.08),
+    0 4px 8px rgba(230, 57, 70, 0.06),
+    0 8px 16px rgba(230, 57, 70, 0.04),
+    0 16px 32px rgba(230, 57, 70, 0.02);
+
+  --shadow-card-hover:
+    0 4px 8px rgba(230, 57, 70, 0.12),
+    0 8px 16px rgba(230, 57, 70, 0.08),
+    0 16px 32px rgba(230, 57, 70, 0.06);
+
+  --font-display: "Parisienne", cursive;
+  --font-serif: "Cormorant Garamond", serif;
+  --font-body: "Nunito", "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+/* === Reset === */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background: linear-gradient(
+    135deg,
+    #fff8f3 0%,
+    #fff0e8 25%,
+    #fce4ec 50%,
+    #f3e5f5 75%,
+    #fff8f3 100%
+  );
+  background-size: 400% 400%;
+  background-attachment: fixed;
+  animation: gradient-shift 25s ease infinite;
+  color: var(--color-text);
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  line-height: 1.5;
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* === Scrollbar === */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-secondary);
+  border-radius: 3px;
+}
+
+/* === Shared Animations === */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+/* === Reduced Motion === */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

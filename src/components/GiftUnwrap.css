@@ -1,0 +1,543 @@
+/* === Gift Unwrap Overlay === */
+
+.gift-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(
+    ellipse at 50% 40%,
+    #2d1f3d 0%,
+    #1a0e2e 60%,
+    #0d0618 100%
+  );
+  overflow: hidden;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.gift-overlay.phase-transitioning {
+  animation: overlay-fade 1000ms ease-in forwards;
+  pointer-events: none;
+}
+
+/* === Content Wrapper (fades out during reveal) === */
+
+.gift-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  z-index: 2;
+}
+
+.phase-revealing .gift-content,
+.phase-transitioning .gift-content {
+  opacity: 0;
+  transform: scale(0.95) translateY(20px);
+  pointer-events: none;
+}
+
+/* === Rose Petals === */
+
+.gift-petals {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  transition: opacity 0.8s ease;
+}
+
+.phase-revealing .gift-petals,
+.phase-transitioning .gift-petals {
+  opacity: 0;
+}
+
+.gift-petal {
+  position: absolute;
+  top: -40px;
+  width: var(--petal-size);
+  height: var(--petal-size);
+  border-radius: 50% 0 50% 50%;
+  opacity: 0.5;
+  animation: petal-fall var(--petal-duration) var(--petal-delay) linear infinite;
+  will-change: transform;
+}
+
+.gift-petal::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 0 50% 50% 50%;
+  background: inherit;
+  transform: rotate(45deg);
+  transform-origin: center;
+}
+
+@keyframes petal-fall {
+  0% {
+    transform: translateX(0) translateY(0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.5;
+  }
+  90% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: translateX(var(--petal-sway)) translateY(110vh) rotate(var(--petal-rotation));
+    opacity: 0;
+  }
+}
+
+/* === Text Above Gift === */
+
+.gift-text-above {
+  font-family: var(--font-display);
+  color: #fff;
+  font-size: clamp(1.2rem, 5vw, 1.8rem);
+  text-align: center;
+  margin-bottom: 2rem;
+  opacity: 0;
+  animation: fadeInDown 1s 0.3s ease both;
+  text-shadow: 0 2px 16px rgba(230, 57, 70, 0.4);
+  padding: 0 1.5rem;
+}
+
+.gift-text-below {
+  font-family: var(--font-body);
+  color: rgba(255, 255, 255, 0.6);
+  font-size: clamp(0.8rem, 3vw, 1rem);
+  text-align: center;
+  margin-top: 1.5rem;
+  opacity: 0;
+  animation: fadeInUp 0.8s 0.8s ease both, text-pulse 2.5s 1.6s ease-in-out infinite;
+}
+
+@keyframes text-pulse {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* === Gift Scene (box + card container) === */
+
+.gift-scene {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  perspective: 800px;
+  opacity: 0;
+  animation: fadeInUp 0.8s 0.5s ease both;
+}
+
+/* === Gift Box Container === */
+
+.gift-box {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gift-box.phase-idle {
+  animation: box-float 3s ease-in-out infinite;
+}
+
+.gift-box.phase-unwrapping {
+  animation: box-tremble 0.15s ease-in-out 5;
+}
+
+@keyframes box-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes box-tremble {
+  0%, 100% {
+    transform: translateX(0) rotate(0deg);
+  }
+  25% {
+    transform: translateX(-3px) rotate(-0.5deg);
+  }
+  75% {
+    transform: translateX(3px) rotate(0.5deg);
+  }
+}
+
+/* === Gift Lid === */
+
+.gift-lid {
+  position: relative;
+  width: calc(var(--box-width) * 1.08);
+  height: calc(var(--box-width) * 0.18);
+  background: linear-gradient(180deg, #ef4f5c 0%, #e63946 100%);
+  border-radius: 6px 6px 0 0;
+  z-index: 3;
+  transform-origin: center bottom;
+  transform-style: preserve-3d;
+  transition: transform 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.gift-lid::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 2%;
+  right: 2%;
+  height: 6px;
+  background: #c0392b;
+  border-radius: 0 0 2px 2px;
+  transform: rotateX(-90deg);
+  transform-origin: top;
+}
+
+.phase-opening .gift-lid,
+.phase-revealing .gift-lid,
+.phase-transitioning .gift-lid {
+  transform: rotateX(-115deg);
+}
+
+/* === Gift Body === */
+
+.gift-body {
+  --box-width: clamp(160px, 42vw, 240px);
+  position: relative;
+  width: var(--box-width);
+  height: calc(var(--box-width) * 0.85);
+  background: linear-gradient(135deg, #e63946 0%, #c0392b 100%);
+  border-radius: 0 0 10px 10px;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 0 30px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* Decorative diagonal stripes */
+.gift-body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 12px,
+    rgba(255, 255, 255, 0.04) 12px,
+    rgba(255, 255, 255, 0.04) 14px
+  );
+  border-radius: inherit;
+}
+
+/* === Ribbons === */
+
+.gift-ribbon-v,
+.gift-ribbon-h {
+  position: absolute;
+  background: linear-gradient(
+    90deg,
+    #b8860b 0%,
+    #daa520 20%,
+    #ffd700 50%,
+    #daa520 80%,
+    #b8860b 100%
+  );
+  z-index: 2;
+  transition: transform 0.6s ease-in, opacity 0.4s ease;
+}
+
+.gift-ribbon-v {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 22px;
+  height: 100%;
+}
+
+.gift-ribbon-h {
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  width: 100%;
+  height: 22px;
+}
+
+/* Ribbon on the lid */
+.gift-ribbon-v-lid {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 22px;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    #b8860b 0%,
+    #daa520 20%,
+    #ffd700 50%,
+    #daa520 80%,
+    #b8860b 100%
+  );
+  z-index: 2;
+  transition: opacity 0.4s ease;
+}
+
+.phase-unwrapping .gift-ribbon-v,
+.phase-unwrapping .gift-ribbon-v-lid {
+  animation: ribbon-slide-v 0.6s ease-in forwards;
+}
+
+.phase-unwrapping .gift-ribbon-h {
+  animation: ribbon-slide-h 0.6s ease-in forwards;
+}
+
+.phase-opening .gift-ribbon-v,
+.phase-opening .gift-ribbon-h,
+.phase-opening .gift-ribbon-v-lid,
+.phase-revealing .gift-ribbon-v,
+.phase-revealing .gift-ribbon-h,
+.phase-revealing .gift-ribbon-v-lid,
+.phase-transitioning .gift-ribbon-v,
+.phase-transitioning .gift-ribbon-h,
+.phase-transitioning .gift-ribbon-v-lid {
+  opacity: 0;
+}
+
+@keyframes ribbon-slide-v {
+  to {
+    transform: translateX(-50%) translateY(-120%) scaleY(0.3);
+    opacity: 0;
+  }
+}
+
+@keyframes ribbon-slide-h {
+  to {
+    transform: translateY(-50%) translateX(120%) scaleX(0.3);
+    opacity: 0;
+  }
+}
+
+/* === Bow === */
+
+.gift-bow {
+  position: absolute;
+  top: -28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+  filter: drop-shadow(0 2px 8px rgba(255, 215, 0, 0.5));
+  transition: filter 0.3s ease;
+}
+
+.phase-idle .gift-bow {
+  animation: bow-pulse 2.5s ease-in-out infinite;
+}
+
+.phase-unwrapping .gift-bow {
+  animation: bow-spiral 0.7s cubic-bezier(0.55, 0, 0.2, 1) forwards;
+}
+
+.phase-opening .gift-bow,
+.phase-revealing .gift-bow,
+.phase-transitioning .gift-bow {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@keyframes bow-pulse {
+  0%, 100% {
+    transform: translateX(-50%) scale(1);
+    filter: drop-shadow(0 2px 8px rgba(255, 215, 0, 0.5));
+  }
+  50% {
+    transform: translateX(-50%) scale(1.08);
+    filter: drop-shadow(0 4px 16px rgba(255, 215, 0, 0.7));
+  }
+}
+
+@keyframes bow-spiral {
+  0% {
+    transform: translateX(-50%) scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-50%) translateY(-180px) scale(0.2) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+/* === Inner Glow === */
+
+.gift-glow {
+  position: absolute;
+  inset: -60%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 215, 0, 0.45) 0%,
+    rgba(255, 183, 197, 0.2) 40%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.phase-opening .gift-glow,
+.phase-revealing .gift-glow {
+  opacity: 1;
+}
+
+.phase-transitioning .gift-glow {
+  opacity: 0.5;
+}
+
+/* === Heart Valentine Card (fixed center, independent of content) === */
+
+.gift-heart-card {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.5);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.phase-revealing .gift-heart-card {
+  animation: heart-appear 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.phase-transitioning .gift-heart-card {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+
+@keyframes heart-appear {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.gift-heart-shape {
+  width: clamp(80px, 22vw, 120px);
+  height: auto;
+  margin-bottom: 1rem;
+}
+
+.gift-heart-card-title {
+  font-family: var(--font-display);
+  color: #fff;
+  font-size: clamp(1.3rem, 5vw, 2rem);
+  text-align: center;
+  text-shadow: 0 2px 12px rgba(230, 57, 70, 0.5);
+  white-space: nowrap;
+}
+
+.gift-exclaim {
+  font-family: var(--font-serif);
+}
+
+/* === Confetti Canvas === */
+
+.gift-confetti-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 101;
+  pointer-events: none;
+}
+
+/* === Overlay Fade === */
+
+@keyframes overlay-fade {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* === Stars/Sparkle Background === */
+
+.gift-stars {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
+}
+
+.phase-revealing .gift-stars,
+.phase-transitioning .gift-stars {
+  opacity: 0;
+}
+
+.gift-star {
+  position: absolute;
+  width: var(--star-size);
+  height: var(--star-size);
+  background: #fff;
+  border-radius: 50%;
+  opacity: 0;
+  animation: star-twinkle var(--star-duration) var(--star-delay) ease-in-out infinite;
+}
+
+@keyframes star-twinkle {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: var(--star-opacity);
+    transform: scale(1);
+  }
+}
+
+/* === Responsive === */
+
+@media (min-width: 480px) {
+  .gift-body {
+    --box-width: 200px;
+  }
+
+  .gift-text-above {
+    font-size: 1.6rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .gift-body {
+    --box-width: 240px;
+  }
+
+  .gift-text-above {
+    font-size: 1.8rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .gift-text-below {
+    margin-top: 2rem;
+  }
+}

@@ -1,0 +1,92 @@
+.compliment {
+  text-align: center;
+  padding: 1.5rem 2rem;
+  animation: fadeInUp 0.8s ease-out 0.8s both;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--color-card-border);
+  border-radius: 20px;
+  box-shadow: 0 2px 12px rgba(230, 57, 70, 0.05);
+  max-width: 640px;
+  width: 100%;
+  margin: 1rem auto 0;
+}
+
+.compliment-text {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  font-style: italic;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin: 0;
+  line-height: 1.5;
+  max-width: 360px;
+  min-height: 4.5em;
+  position: relative;
+  padding: 0 1.5rem;
+}
+
+/* Elegant typographic quotes */
+.compliment-text::before,
+.compliment-text::after {
+  font-family: var(--font-serif);
+  font-size: 2.5rem;
+  font-style: normal;
+  font-weight: 400;
+  position: absolute;
+  opacity: 0.2;
+  color: var(--color-accent);
+  line-height: 1;
+}
+
+.compliment-text::before {
+  content: "\201C";
+  top: -0.3rem;
+  left: -0.2rem;
+}
+
+.compliment-text::after {
+  content: "\201D";
+  bottom: -0.8rem;
+  right: -0.2rem;
+}
+
+.new-compliment-button {
+  border: 1.5px solid var(--color-card-border);
+  background: var(--color-card-bg);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--color-text-muted);
+  padding: 0.5rem 1.6rem;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  transition: all 0.3s ease;
+  min-height: 44px;
+}
+
+.new-compliment-button:hover {
+  border-color: var(--color-secondary);
+  color: var(--color-primary);
+  box-shadow: 0 2px 12px rgba(230, 57, 70, 0.1);
+  transform: translateY(-1px);
+}
+
+.new-compliment-button:active {
+  transform: scale(0.97);
+}
+
+@media (min-width: 768px) {
+  .compliment-text {
+    font-size: 1.6rem;
+    max-width: 480px;
+  }
+}

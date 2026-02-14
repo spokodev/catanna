@@ -1,0 +1,5 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='192' height='192' viewBox='0 0 100 100'>
+  <rect width='100' height='100' rx='20' fill='#E63946'/>
+  <path d='M50 75 C30 58 15 48 15 35 A15 15 0 0 1 50 28 A15 15 0 0 1 85 35 C85 48 70 58 50 75Z' fill='white'/>
+  <text x='50' y='55' text-anchor='middle' font-size='12' font-family='Arial' fill='#E63946' font-weight='bold'>🐱</text>
+</svg>
