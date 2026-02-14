@@ -43,6 +43,7 @@
   cursor: pointer;
   transform-origin: center bottom;
   will-change: translate, scale;
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* Leg trotting animation */
