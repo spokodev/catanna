@@ -69,12 +69,6 @@ export function CatCard({ catUrl, isLoading, error, onBonusCat }: CatCardProps) 
         {catUrl && (
           <div className={`cat-image-wrapper ${imageLoaded ? "revealed" : ""}`}>
             <img
-              src={catUrl}
-              alt=""
-              aria-hidden="true"
-              className="cat-image-bg"
-            />
-            <img
               key={catUrl}
               src={catUrl}
               alt="Милий котик для тебе"
