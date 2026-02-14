@@ -100,7 +100,7 @@
 .gift-text-above {
   font-family: var(--font-display);
   color: #fff;
-  font-size: clamp(1.2rem, 5vw, 1.8rem);
+  font-size: clamp(1.5rem, 6vw, 2rem);
   text-align: center;
   margin-bottom: 2rem;
   opacity: 0;
@@ -112,7 +112,7 @@
 .gift-text-below {
   font-family: var(--font-body);
   color: rgba(255, 255, 255, 0.6);
-  font-size: clamp(0.8rem, 3vw, 1rem);
+  font-size: clamp(0.95rem, 3.5vw, 1.1rem);
   text-align: center;
   margin-top: 1.5rem;
   opacity: 0;
